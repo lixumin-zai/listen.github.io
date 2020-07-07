@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装) | listen</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://lixumin-zai.github.io/listen.github.io//favicon.ico?v=1594099408080">
+<link rel="stylesheet" href="https://lixumin-zai.github.io/listen.github.io//styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装)
+首次登陆
+第一次登陆服务器时，是这个样子的：
+
+输入指令
+然后依次输入下面的命令（期间需要手动确认三次）：
+# 更新软件库
+apt-get update
+
+# 升..." />
+    <meta name="keywords" content="教程" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://lixumin-zai.github.io/listen.github.io/">
+        <img src="https://lixumin-zai.github.io/listen.github.io//images/avatar.png?v=1594099408080" class="site-logo">
+        <h1 class="site-title">listen</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      日记
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://lixumin-zai.github.io/listen.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装)</h2>
+            <div class="post-date">2020-07-07</div>
+            
+              <div class="feature-container" style="background-image: url('https://lixumin-zai.github.io/listen.github.io//post-images/阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装).jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="阿里云服务器ecs-ubuntu1604-初次使用配置教程图形界面安装">阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装)</h3>
+<h2 id="首次登陆">首次登陆</h2>
+<h2 id="第一次登陆服务器时是这个样子的">第一次登陆服务器时，是这个样子的：</h2>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/listen0/cloud_image/raw/master/win/20200524231543.png" alt="image-20200518230525083" loading="lazy"></figure>
+<h2 id="输入指令">输入指令</h2>
+<p>然后依次输入下面的命令（期间需要手动确认三次）：</p>
+<pre><code class="language-css"># 更新软件库
+apt-get update
+
+# 升级软件
+apt-get upgrade
+
+# 安装桌面系统
+apt-get install ubuntu-desktop
+</code></pre>
+<p>等到图形界面安装完成，关闭Workbench</p>
+<p>reboot</p>
+<p>使用VNC登录，如图：</p>
+<figure data-type="image" tabindex="2"><img src="https://gitee.com/listen0/cloud_image/raw/master/win/20200519172706.png" alt="image-20200518222643127" loading="lazy"></figure>
+<p>按提示完成一系列配置就可以使用了</p>
+<figure data-type="image" tabindex="3"><img src="https://gitee.com/listen0/cloud_image/raw/master/win/20200519172545-2.png" alt="image-20200518230513151" loading="lazy"></figure>
+<p>18.04</p>
+<p>2.1依次完成以下命令（安装Ubnutu图形化界面）：</p>
+<pre><code>    apt-get update
+    apt-get install vnc4server
+    apt-get install xfce4
+    apt-get install ubuntu-desktop
+    sudo apt-get install xrdp
+</code></pre>
+<pre><code>	# 执行下面两行命令
+	cd /usr/share/lightdm/lightdm.conf.d/
+    vim ./50-unity-greeter.conf
+
+	# 在打开的文件中添加以下三行语句：
+	user-session=ubuntu
+    greeter-show-manual-login=true
+    all-guest=false
+    
+</code></pre>
+<pre><code>#命令执行：
+vim /root/.profile  
+# 最后一行修改为：
+tty -s &amp;&amp; mesg n  || true
+
+# 如下图
+</code></pre>
+<p>reboot</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://lixumin-zai.github.io/listen.github.io/tag/dteGE6fIy/" class="tag">
+                    教程
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://lixumin-zai.github.io/listen.github.io/post/hello-gridea/">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

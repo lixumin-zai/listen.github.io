@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lixumin-zai.github.io/listen.github.io/</id>
     <title>listen</title>
-    <updated>2020-07-07T05:06:59.682Z</updated>
+    <updated>2020-07-07T05:23:35.025Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lixumin-zai.github.io/listen.github.io/"/>
     <link rel="self" href="https://lixumin-zai.github.io/listen.github.io/atom.xml"/>
@@ -10,6 +10,61 @@
     <logo>https://lixumin-zai.github.io/listen.github.io/images/avatar.png</logo>
     <icon>https://lixumin-zai.github.io/listen.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, listen</rights>
+    <entry>
+        <title type="html"><![CDATA[阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装)]]></title>
+        <id>https://lixumin-zai.github.io/listen.github.io/post/阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装)/</id>
+        <link href="https://lixumin-zai.github.io/listen.github.io/post/阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装)/">
+        </link>
+        <updated>2020-07-07T05:20:47.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="阿里云服务器ecs-ubuntu1604-初次使用配置教程图形界面安装">阿里云服务器ECS Ubuntu16.04 初次使用配置教程(图形界面安装)</h3>
+<h2 id="首次登陆">首次登陆</h2>
+<h2 id="第一次登陆服务器时是这个样子的">第一次登陆服务器时，是这个样子的：</h2>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/listen0/cloud_image/raw/master/win/20200524231543.png" alt="image-20200518230525083" loading="lazy"></figure>
+<h2 id="输入指令">输入指令</h2>
+<p>然后依次输入下面的命令（期间需要手动确认三次）：</p>
+<pre><code class="language-css"># 更新软件库
+apt-get update
+
+# 升级软件
+apt-get upgrade
+
+# 安装桌面系统
+apt-get install ubuntu-desktop
+</code></pre>
+<p>等到图形界面安装完成，关闭Workbench</p>
+<p>reboot</p>
+<p>使用VNC登录，如图：</p>
+<figure data-type="image" tabindex="2"><img src="https://gitee.com/listen0/cloud_image/raw/master/win/20200519172706.png" alt="image-20200518222643127" loading="lazy"></figure>
+<p>按提示完成一系列配置就可以使用了</p>
+<figure data-type="image" tabindex="3"><img src="https://gitee.com/listen0/cloud_image/raw/master/win/20200519172545-2.png" alt="image-20200518230513151" loading="lazy"></figure>
+<p>18.04</p>
+<p>2.1依次完成以下命令（安装Ubnutu图形化界面）：</p>
+<pre><code>    apt-get update
+    apt-get install vnc4server
+    apt-get install xfce4
+    apt-get install ubuntu-desktop
+    sudo apt-get install xrdp
+</code></pre>
+<pre><code>	# 执行下面两行命令
+	cd /usr/share/lightdm/lightdm.conf.d/
+    vim ./50-unity-greeter.conf
+
+	# 在打开的文件中添加以下三行语句：
+	user-session=ubuntu
+    greeter-show-manual-login=true
+    all-guest=false
+    
+</code></pre>
+<pre><code>#命令执行：
+vim /root/.profile  
+# 最后一行修改为：
+tty -s &amp;&amp; mesg n  || true
+
+# 如下图
+</code></pre>
+<p>reboot</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://lixumin-zai.github.io/listen.github.io/post/hello-gridea/</id>
