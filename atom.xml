@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://lixumin-zai.github.io/listenfor/</id>
     <title>listen</title>
-    <updated>2020-09-23T13:23:01.367Z</updated>
+    <updated>2020-09-24T03:15:44.596Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://lixumin-zai.github.io/listenfor/"/>
     <link rel="self" href="https://lixumin-zai.github.io/listenfor/atom.xml"/>
@@ -10,6 +10,124 @@
     <logo>https://lixumin-zai.github.io/listenfor/images/avatar.png</logo>
     <icon>https://lixumin-zai.github.io/listenfor/favicon.ico</icon>
     <rights>All rights reserved 2020, listen</rights>
+    <entry>
+        <title type="html"><![CDATA[基于ECS快速搭建Docker环境]]></title>
+        <id>https://lixumin-zai.github.io/listenfor/post/ji-yu-ecs-kuai-su-da-jian-docker-huan-jing/</id>
+        <link href="https://lixumin-zai.github.io/listenfor/post/ji-yu-ecs-kuai-su-da-jian-docker-huan-jing/">
+        </link>
+        <updated>2020-09-24T03:03:53.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="基于ecs快速搭建docker环境">基于ECS快速搭建Docker环境</h1>
+<p>心得体会：<a href="https://www.docker.com/">Docker</a> 可以说是每一个开发人员必须了解的技术，它释放了计算虚拟化的威力，极大提高了应用的维护效率，同时降低了云计算应用开发的成本！本次学习中，了解了Docker的部署以及基本使用，值得注意的是在阿里云ECS服务器中，想要远程访问服务器需要在安全组开放相应端口，否则访问失败、连接不上服务器。</p>
+<h2 id="连接ecs服务器">连接ECS服务器</h2>
+<p>环境：windows10、Windows Terminal。</p>
+<p>连接ECS服务器</p>
+<pre><code class="language-shell">ssh root@[ipaddress]
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://lixumin-zai.github.io/listenfor//post-images/1600916762062.png" alt="" loading="lazy"></figure>
+<h2 id="安装docker-ce">安装Docker CE</h2>
+<ul>
+<li>Docker CE<br>
+Docker CE是免费的Docker产品的新名称，Docker CE包含了完整的Docker平台，非常适合开发人员和运维团队构建容器APP。</li>
+<li>Docker EE<br>
+Docker EE由公司支持，可在经过认证的操作系统和云提供商中使用，并可运行来自Docker Store的、经过认证的容器和插件。</li>
+</ul>
+<ol>
+<li>安装Docker CE的依赖包</li>
+</ol>
+<pre><code class="language-shell">yum install -y yum-utils device-mapper-persistent-data lvm2
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://lixumin-zai.github.io/listenfor//post-images/1600916829228.png" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>添加Docker CE的软件源信息，使用阿里源。</li>
+</ol>
+<pre><code class="language-shell">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://lixumin-zai.github.io/listenfor//post-images/1600916854638.png" alt="" loading="lazy"></figure>
+<ol start="3">
+<li>安装Docker CE。</li>
+</ol>
+<pre><code>yum makecache fast
+yum -y install docker-ce
+</code></pre>
+<p><img src="https://lixumin-zai.github.io/listenfor//post-images/1600916865847.png" alt="" loading="lazy"><br>
+<img src="https://lixumin-zai.github.io/listenfor//post-images/1600916877610.png" alt="" loading="lazy"></p>
+<ol start="4">
+<li>启动Docker服务。</li>
+</ol>
+<pre><code class="language-shell">systemctl start docker
+</code></pre>
+<h2 id="配置阿里云镜像仓库镜像加速">配置阿里云镜像仓库（镜像加速）</h2>
+<p>Docker的默认官方远程仓库是<a href="https://hub.docker.com/">hub.docker.com</a>，由于网络原因，下载一个Docker官方镜像会需要很长的时间，甚至下载失败。使用阿里云容器镜像服务ACR提供了官方的镜像站点，从而加速官方镜像的下载。</p>
+<ol>
+<li>
+<p>登录容器镜像服务控制台。<br>
+<img src="https://lixumin-zai.github.io/listenfor//post-images/1600916901381.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>单击[镜像中心] &gt; [镜像加速器]，阿里云提供了一个专属的镜像加速地址。<br>
+<img src="https://lixumin-zai.github.io/listenfor//post-images/1600916914312.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>配置Docker的自定义镜像仓库地址。</p>
+</li>
+</ol>
+<pre><code>tee /etc/docker/daemon.json &lt;&lt;-'EOF'
+{
+  &quot;registry-mirrors&quot;: [&quot;https://*.mirror.aliyuncs.com&quot;]
+}
+EOF
+</code></pre>
+<ol start="4">
+<li>
+<p>重新加载服务配置文件，并重启Docker服务。</p>
+<pre><code>systemctl daemon-reload
+systemctl restart docker
+</code></pre>
+</li>
+</ol>
+<h2 id="使用docker安装nginx服务">使用Docker安装Nginx服务</h2>
+<ol>
+<li>查看Docker镜像仓库中Nginx的可用版本</li>
+</ol>
+<pre><code class="language-shell">docker search nginx
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://lixumin-zai.github.io/listenfor//post-images/1600916935036.png" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>拉取最新版的Nginx镜像。</li>
+</ol>
+<pre><code class="language-shell">docker pull nginx:latest
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://lixumin-zai.github.io/listenfor//post-images/1600916944378.png" alt="" loading="lazy"></figure>
+<ol start="3">
+<li>查看本地镜像。</li>
+</ol>
+<pre><code class="language-shell">docker images
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://lixumin-zai.github.io/listenfor//post-images/1600916953856.png" alt="" loading="lazy"></figure>
+<ol start="4">
+<li>运行容器。</li>
+</ol>
+<pre><code class="language-shell">docker run --name nginx-test -p 8080:80 -d nginx
+</code></pre>
+<p>命令参数说明：</p>
+<ul>
+<li>--name nginx-test：容器名称。</li>
+<li>-p 8080:80： 端口进行映射，将本地8080端口映射到容器内部的80端口。</li>
+<li>-d nginx： 设置容器在后台一直运行。<br>
+<img src="https://lixumin-zai.github.io/listenfor//post-images/1600916963137.png" alt="" loading="lazy"></li>
+</ul>
+<ol start="5">
+<li>
+<p><mark>访问服务器前要设置ECS安全组，使得其他IP可以通过8080端口访问服务器</mark><br>
+<img src="https://lixumin-zai.github.io/listenfor//post-images/1600916973371.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>在本地浏览器连接服务器<br>
+<img src="https://lixumin-zai.github.io/listenfor//post-images/1600916998030.png" alt="" loading="lazy"></p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[基于ECS搭建FTP服务]]></title>
         <id>https://lixumin-zai.github.io/listenfor/post/ji-yu-ecs-da-jian-ftp-fu-wu/</id>
